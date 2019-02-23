@@ -1,12 +1,9 @@
-.quantity {
-    width: 60px
+.ok {
+    padding: 20px;
+    background-color: coral;
 }
 
-input[type="text"], input[type="number"] {
-    margin-right: 10px;
-}
-
-.suppr, .edit {
-    margin-right: 10px;
-    margin-bottom: 5px;
+.ko {
+    padding: 20px;
+    background-color: red;
 }

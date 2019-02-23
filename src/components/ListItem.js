@@ -1,13 +1,12 @@
 import React from 'react';
-import Article from './Article';
-const ListItem = (props) => {
-    return(
-        <div>
-            {
-              props.articles.map(article => <Article data={article} key={article.id} editArticle={props.editArticle} deleteArticle ={props.deleteArticle}/>)
-            }
+import ItemPath from './ItemPath';
 
-        </div>
-    );
-};
-export default  ListItem ;
+function ListItem(props) {
+    return (
+      <div>
+        {props.items.map(c => <ItemPath path={c.path} />)}
+       </div> 
+    ); 
+  } 
+  
+  export default ListItem;

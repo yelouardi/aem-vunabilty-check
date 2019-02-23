@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "AVC",
+  "name": "AEM Vunabilty Check",
   "icons": [
     {
       "src": "favicon.ico",
