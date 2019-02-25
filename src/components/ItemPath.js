@@ -10,49 +10,39 @@ class ItemPath extends React.Component {
         };
     }
 
+    componentDidMount() {
+        // Call our fetch function below once the component mounts
+      this.callBackendAPI()
+        .then(res => this.setState({ code: res.express }))
+        .catch(err => console.log(err));
+    }
+   // Fetches our GET route from the Express server. (Note the route we are fetching matches the GET route from server.js
+   callBackendAPI = async () => {
+    const response = await fetch('/express_backend?path=https://www.airbus.com'+this.state.path);
+    const body = await response.json();
+
+    if (response.status !== 200) {
+      throw Error(body.message) 
+    }
+    return body;
+  };
+
      render() {
-        const url = 'https://www.airbus.com'+this.state.path;
-
-        const myInit = {
-            method: 'HEAD',
-            mode: 'no-cors',
-            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: "same-origin", // include, *same-origin, omit
-            redirect: "follow", // manual, *follow, error
-            referrer: "no-referrer", // no-referrer, *client
-        };
-
-        const myRequest = new Request(url, myInit);
-        let currentComponent = this;
-        fetch(myRequest)
-            .then(
-                function(response) {
-                if (response.status !== 200) {
-                    console.log('Looks like there was a problem. Status Code: ' +
-                    response);
-                    currentComponent.setState({code:response.status});
-                    return;
-                }
-                }
-            )
-            .catch(function(err) {
-                console.log('Fetch Error :-S', err);
-            });
-
-        if(this.state.code !==0 ){
+    if(this.state.code === 200){
+        return (
+            <div className="alert alert-danger">
+            <p className="badge badge-danger">Danger : {this.state.code} </p>
+            <p className="mb-0">https://www.airbus.com{this.state.path}</p>
+            </div>
+          );
+        }
+     else {
             return (
-                <div className="alert alert-danger">
-                <p className="badge badge-danger">Danger : {this.state.code} </p>
+                <div className="alert alert-success">
+                <p className="badge badge-success">Protected : {this.state.code} </p>
                 <p className="mb-0">https://www.airbus.com{this.state.path}</p>
                 </div>
               );
-        }else{
-                return (
-                    <div className="alert alert-success">
-                    <p className="badge badge-success">Protected : {this.state.code}</p>
-                    <p className="mb-0">https://www.airbus.com{this.state.path}</p>
-                    </div> 
-                  );
             }
         }
     }    
