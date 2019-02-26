@@ -4,7 +4,7 @@ import ItemPath from './ItemPath';
 function ListItem(props) {
     return (
       <div>
-        {props.items.map(c => <ItemPath path={c.path} />)}
+        {props.items.map(item => <ItemPath path={item.path} />)}
        </div> 
     ); 
   } 
