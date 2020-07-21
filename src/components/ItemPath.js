@@ -1,6 +1,6 @@
 import React from 'react';
 import '../style.css';
-const domaine = 'https://www.acj.airbus.com';
+const domaine = 'PATH';
 class ItemPath extends React.Component {
     constructor(props) {
         super(props)
