@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "body-parser": "^1.18.3",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "json-loader": "^0.5.7",
     "jsonfile": "^5.0.0",
     "node-fetch": "^2.3.0",
